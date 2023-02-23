@@ -12,20 +12,6 @@ import pandas as pd
 import subprocess
 Base=declarative_base()
 
-def read_config(config_file_path:str) -> dict:
-    """
-    Method, that reads the config file and returns the config file as a dictionary.
-    @Params
-        config_file_path : str - (Required) The path to the config file.
-    @Returns
-        config_file : dict - The config file as a dictionary.
-    """
-    config_file = {}
-
-    with open(config_file_path, "r") as config_file:
-        config_file = json.load(config_file)
-
-    return config_file
 
 class Data(Base):
     #TODO: add column SOLD with default value False
@@ -81,6 +67,11 @@ class LoadDataFromCSV():
                 self.engine.execute("UPDATE data SET is_sold = 'True' WHERE link = '{}'".format(link["sold_house_link"]))
                 self.session.commit()
                 
+def read_config(config_file_path:str) -> dict:
+    config_file = {}
+    with open(config_file_path, "r") as config_file:
+        config_file = json.load(config_file)
+    return config_file
 
             
 def parse_price(price_list):
